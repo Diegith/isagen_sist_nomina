@@ -3,6 +3,7 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
+import Footer from './Footer';
 
 export default function Navbar() {
     const [click, setClick] = useState(false);
@@ -28,15 +29,31 @@ export default function Navbar() {
     };
     return (
         <>
-            <nav className='navbar'>
-                <Link to='/' className="navbar-logo" onClick={closeMobileMenu}>
-                   ISAGEN
+        <div className="bg">
+            <nav className='navbar'>                
+                <Link to='/' className="navbar-logo"  onClick={closeMobileMenu}>
+                <img
+                    src="/logo_ISAGEN.png"
+                    width="45"
+                    height="45"
+                    className="d-inline-block align-top"
+                    alt=""
+                  />   ISAGEN
                 </Link>
                 <div className='menu-icon' onClick={handleClick}>
                     <i className={click ? 'fas fa-times':'fas fa-bars'}
                     />
                 </div>
                 <ul className={click ? 'nav-menu active': 'nav-menu'}>                    
+                                       
+                <li className ='nav-item'>
+                        <Link 
+                        to='/' 
+                        className='nav-links' 
+                        onClick={closeMobileMenu}>
+                        Inicio
+                        </Link> 
+                    </li>
                     <li
                         className='nav-item'
                         onMouseEnter={onMouseEnter}
@@ -77,7 +94,8 @@ export default function Navbar() {
                     </li>
                 </ul>                    
                 <Button />
-            </nav>            
+            </nav> 
+            </div>
         </>
     )
 }

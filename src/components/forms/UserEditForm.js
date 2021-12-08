@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useRef, Fragment} from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -6,42 +6,24 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import { Link } from 'react-router-dom';
 
-const initialForm = {
-  id:null,
-  name:"",
-  lastName: "",
-  nPhone: 0,
-  nIdent: 0,
-  userName: "",
-  password: "",
-  dateAdmission: "",
-  typeUser: "",
-  state: ""
-}
 
-const UserRegForm = () => {
-
-    const [form, setForm] = useState({initialForm})
-
-    const handleChange = (e) => {
-
-    }
-
-    const handleSubmit = (e) => {
-      
-    }
-
-    const handleReset = (e) => {
-      
-    }
+export default function UserEditForm() {
+    const name = useRef();
+    const lastName = useRef();
+    const nPhone = useRef();
+    const n_Indentif = useRef();
+    const userName = useRef();
+    const password = useRef();
+    const dateAdmission = useRef();
+    const typeUser = useRef();
 
     return (
-        <>        
+        <Fragment>        
             <Container width="lg" sx={{ mt: 4, mb: 4 }}>                            
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                         <div className="col-sm-7 col-md-6 col-lg-6">
-                            <h3><i className="fas fa-user-tie"></i>  Crear usuario</h3>  
+                            <h3><i className="fas fa-user-tie"></i>  Editar usuario</h3>  
                         </div>
                     </Paper>
                 </Grid>  
@@ -57,114 +39,104 @@ const UserRegForm = () => {
                         height: 'auto',
                       }}
                     >       
-                        <Form onSubmit={handleSubmit}>
+                        <Form>
                             <Row className="mb-3 text-center" >
-                              <Form.Group as={Col} controlId="nombres">                                
+                              <Form.Group as={Col} controlId="name">                                
                                 <TextField
-                                    type ="text"
                                     label="Nombres"
-                                    onChange={handleChange} 
-                                    value = {form.name}
                                     id="outlined-size-small"
+                                    defaultValue="Nombres"
                                     size="small"
+                                    ref={name}
                                 />
                               </Form.Group>
-                              <Form.Group as={Col} controlId="apellidos">
+                              <Form.Group as={Col} controlId="formGridPassword">
                               <TextField
-                                    type ="text"
                                     label="Apellidos"
-                                    onChange={handleChange} 
-                                    value = {form.lastName}
                                     id="outlined-size-small"
+                                    defaultValue="Apellidos"
                                     size="small"
+                                    ref={lastName}
                                 />
                               </Form.Group>
                             </Row>
                             <br/>
                             <Row className="mb-3 text-center" >
-                            <Form.Group as={Col} controlId="telefono">                                                                
+                            <Form.Group as={Col} controlId="name">                                                                
                                 <TextField
-                                    type ="number"
                                     label="Teléfono"
-                                    onChange={handleChange} 
-                                    value = {form.nPhone}
                                     id="outlined-size-small"
+                                    defaultValue="Teléfono"
                                     size="small"
+                                    ref={nPhone}
                                 />
                               </Form.Group>
-                              <Form.Group as={Col} controlId="ndocumento">
+                              <Form.Group as={Col} controlId="formGridPassword">
                                 <TextField
-                                    type ="number"
                                     label="Número de documento"
-                                    onChange={handleChange} 
-                                    value = {form.nIdentif}
                                     id="outlined-size-small"
+                                    defaultValue="Número de documento"
                                     size="small"
+                                    ref={n_Indentif}
                                 />
                               </Form.Group>
                             </Row>
                             <br/>
                             <Row className="mb-3 text-center" >
-                            <Form.Group as={Col} controlId="nomusuario">                                                                
+                            <Form.Group as={Col} controlId="name">                                                                
                                 <TextField
-                                    type ="text"
                                     label="Nombre de usuario"
-                                    onChange={handleChange} 
-                                    value = {form.userName}
                                     id="outlined-size-small"
+                                    defaultValue="Nombre de usuario"
                                     size="small"
+                                    ref={userName}
                                 />
                               </Form.Group>
-                              <Form.Group as={Col} controlId="contraseña">
+                              <Form.Group as={Col} controlId="formGridPassword">
                                 <TextField
-                                    type ="number"
                                     label="Contraseña"
-                                    onChange={handleChange} 
-                                    value = {form.password}
                                     id="outlined-size-small"
+                                    defaultValue="Contraseña"
                                     size="small"
+                                    ref={password}
                                 />
                               </Form.Group>
                             </Row>
                             <br/>
                             <Row className="mb-3 text-center" >
-                            <Form.Group as={Col} controlId="fingreso">                                                                
+                            <Form.Group as={Col} controlId="name">                                                                
                                 <TextField
                                     label="Fecha de ingreso"
-                                    onChange={handleChange} 
-                                    value = {form.dateAdmission}
                                     id="outlined-size-small"
+                                    defaultValue="Fecha de ingreso"
                                     size="small"
+                                    ref={dateAdmission}
                                 />
                               </Form.Group>
-                              <Form.Group as={Col} controlId="tipousuario">
+                              <Form.Group as={Col} controlId="formGridPassword">
                                 <TextField
-                                    type ="text"
                                     label="Tipo de usuario"
-                                    onChange={handleChange} 
-                                    value = {form.typeUser}
                                     id="outlined-size-small"
+                                    defaultValue="Tipo de usuario"
                                     size="small"
+                                    ref={typeUser}
                                 />
                               </Form.Group>
                             </Row> 
                             <hr/>
                             <div className='text-end'>             
                                 <Link to='/usuarios'>
-                                    <input type="submit" className='btn btn-secondary' value="Cancelar"></input>        
+                                    <button className='btn btn-secondary'>Cancelar</button>        
                                 </Link>             
                                 <Link to='/usuarios'>
-                                    <input type="submit" className='btn btn-primary' value="Guardar"></input>        
+                                    <button className='btn btn-primary'>Actualizar</button>        
                                 </Link>
-                                <input type="submit" className='btn btn-primary' value="Reset" onClick={handleReset}></input>        
-                            </div>                 
+                            </div>                
                         </Form>
                     </Paper>
                 </Grid>
             </Grid>
     </Container>
-    </>
+    </Fragment>
     )
 }
-
-export default UserRegForm;

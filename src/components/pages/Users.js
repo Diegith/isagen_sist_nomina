@@ -5,8 +5,8 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
 
-export default function Users()
-{  
+const Users = ({data}) => {
+ 
 const users =[
     {
         id: 1,
@@ -17,16 +17,16 @@ const users =[
         userName: "DiegoA",
         password: 4321,
         dateAdmission: "05/11/20",
-        typeUser: "Usuario Nomina",
+        typeUser: "Administrador",
         state: "Inactivo"
     },
     {
         id: 2,
         names: "Miguel",
-        lastNames: "Gutie",
+        lastNames: "Gutierrez",
         nPhone: 4879,
         nIdent: 9784,
-        userName: "JorgeC",
+        userName: "MiguelG",
         password: 9784,
         dateAdmission: "05/01/21",
         typeUser: "Usuario Empleado",
@@ -34,11 +34,11 @@ const users =[
     },
     {
         id: 3,
-        names: "Lupe",
-        lastNames: "Casas",
+        names: "Martha",
+        lastNames: "López",
         nPhone: 6879,
         nIdent: 9786,
-        userName: "LupeC",
+        userName: "MarthaL",
         password: 9786,
         dateAdmission: "19/12/20",
         typeUser: "Usuario Empleado",
@@ -47,22 +47,22 @@ const users =[
     {
         id: 4,
         names: "Angela",
-        lastNames: "Mendoza",
+        lastNames: "Orozco",
         nPhone: 1687,
         nIdent: 7861,
-        userName: "AngelaM",
+        userName: "AngelaO",
         password: 7861,
         dateAdmission: "01/02/20",
-        typeUser: "Administrador",
+        typeUser: "Usuario Nomina",
         state: "Activo"
     },
     {
         id: 5,
-        names: "Jhonatan",
-        lastNames: "Cañola",
+        names: "Andres",
+        lastNames: "Castellanos",
         nPhone: 3572,
         nIdent: 2753,
-        userName: "JhonatanC",
+        userName: "AndresC",
         password: 2753,
         dateAdmission: "18/03/21",
         typeUser: "Administrador",
@@ -85,7 +85,7 @@ const buscar_Usuario = (evento)=>{
                             <h3><i className="fas fa-user-tie"></i> Usuarios</h3>                            
                         </div>
                         <div className='text-end'>             
-                            <Link to='crearusuario'>
+                            <Link to='crear'>
                                 <button className='btn btn-primary'>Crear usuario</button>        
                             </Link>
                         </div>
@@ -129,19 +129,24 @@ const buscar_Usuario = (evento)=>{
                                             <th scope="col">Nombres y apellidos</th>
                                             <th scope="col">Tipo de ususario</th>
                                             <th scope="col">Estado</th>
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     {
                                     listar_Usuario.map(u => <tbody>
-                                        <tr> 
-                                            <td className="text-md-center" key={u.names}>
+                                        <tr className="text-md-center"> 
+                                            <td key={u.names}>
                                                 {u.names} {u.lastNames}                         
                                             </td>
-                                            <td className="text-md-center" key={u.typeUser}>
+                                            <td key={u.typeUser}>
                                                 {u.typeUser}                               
                                             </td>
-                                            <td className="text-md-center" key={u.state}>
+                                            <td key={u.state}>
                                                 {u.state}                                                             
+                                            </td>
+                                            <td key="acciones">
+                                                <button>Editar</button>                                                           
+                                                <button>Eliminar</button>                                                           
                                             </td>
                                         </tr>
                                     </tbody>)}
@@ -155,3 +160,4 @@ const buscar_Usuario = (evento)=>{
         </Fragment>  
     );
 }
+export default Users;
