@@ -1,84 +1,32 @@
-import React, {useState, Fragment} from 'react';
+import { useEffect, useState } from "react";
+import { getUsers, deleteUser } from "../../service/API";
 import { Table } from 'react-bootstrap';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
 
-const Users = ({data}) => {
- 
-const users =[
-    {
-        id: 1,
-        names: "Diego",
-        lastNames: "Albarracin",
-        nPhone: 1234,
-        nIdent: 4321,
-        userName: "DiegoA",
-        password: 4321,
-        dateAdmission: "05/11/20",
-        typeUser: "Administrador",
-        state: "Inactivo"
-    },
-    {
-        id: 2,
-        names: "Miguel",
-        lastNames: "Gutierrez",
-        nPhone: 4879,
-        nIdent: 9784,
-        userName: "MiguelG",
-        password: 9784,
-        dateAdmission: "05/01/21",
-        typeUser: "Usuario Empleado",
-        state: "Inactivo"
-    },
-    {
-        id: 3,
-        names: "Martha",
-        lastNames: "López",
-        nPhone: 6879,
-        nIdent: 9786,
-        userName: "MarthaL",
-        password: 9786,
-        dateAdmission: "19/12/20",
-        typeUser: "Usuario Empleado",
-        state: "Activo"
-    },
-    {
-        id: 4,
-        names: "Angela",
-        lastNames: "Orozco",
-        nPhone: 1687,
-        nIdent: 7861,
-        userName: "AngelaO",
-        password: 7861,
-        dateAdmission: "01/02/20",
-        typeUser: "Usuario Nomina",
-        state: "Activo"
-    },
-    {
-        id: 5,
-        names: "Andres",
-        lastNames: "Castellanos",
-        nPhone: 3572,
-        nIdent: 2753,
-        userName: "AndresC",
-        password: 2753,
-        dateAdmission: "18/03/21",
-        typeUser: "Administrador",
-        state: "Activo"
-    }];
+const AllUsers = () => {
 
-const [listar_Usuario, setListar_Usuario] = useState(users);
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        getAllUsers();
+    }, [])
 
-const buscar_Usuario = (evento)=>{
-    setListar_Usuario(users.filter(u=> u.names.toLowerCase().includes(evento.target.value.toLowerCase())))
+    const getAllUsers = async() => {
+        const res = await getUsers();
+        console.log(res);
+        setUsers(res.data);
+    }
 
-}
+    const deleteUserData = async(id) => {
+        await deleteUser(id);
+        getAllUsers();
+    }
 
-    return (
-        <Fragment>
-            <Container width="lg" sx={{ mt: 4, mb: 4 }}>            
+    return(
+        <>
+        <Container width="lg" sx={{ mt: 4, mb: 4 }}>            
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                         <div className="col-sm-7 col-md-6 col-lg-6">
@@ -114,18 +62,19 @@ const buscar_Usuario = (evento)=>{
                                 </select>
                             </div>
                             <div className="col-sm-12 col-md-5">
-                                <input type="text" name="valor" className="form-control" placeholder="Buscar..." onChange={buscar_Usuario}/>
+                                <input type="text" name="valor" className="form-control" placeholder="Buscar..." />
                             </div>
                             <div className="col-sm-12 col-md-3 text-start">
                                 <button type="submit" className="btn btn-primary"><i className="fas fa-search"></i> Buscar</button>
                             </div> 
                         </div>
-                        </form>        
+                        </form>       
                         <div className="row mt-md-4 p-2">
                             <div className="col-sm-12 table-responsive">
                                 <Table striped bordered hover variant="dark">
                                     <thead>
                                         <tr className="table-dark text-md-center">
+                                            <th scope="col">ID</th>
                                             <th scope="col">Nombres y apellidos</th>
                                             <th scope="col">Tipo de ususario</th>
                                             <th scope="col">Estado</th>
@@ -133,8 +82,11 @@ const buscar_Usuario = (evento)=>{
                                         </tr>
                                     </thead>
                                     {
-                                    listar_Usuario.map(u => <tbody>
+                                    users.map(u => <tbody>
                                         <tr className="text-md-center"> 
+                                            <td key={u.id}>
+                                                {u.id}                               
+                                            </td>
                                             <td key={u.names}>
                                                 {u.names} {u.lastNames}                         
                                             </td>
@@ -145,8 +97,10 @@ const buscar_Usuario = (evento)=>{
                                                 {u.state}                                                             
                                             </td>
                                             <td key="acciones">
-                                                <button>Editar</button>                                                           
-                                                <button>Eliminar</button>                                                           
+                                                <Link to={`/usuarios/editar/${u.id}`}>
+                                                    <button className='btn btn-primary' style={{marginRight: 10}}>Editar</button>
+                                                </Link>                                                
+                                                <button className='btn btn-secondary' onClick={() => deleteUserData(u.id)}>Eliminar</button>                                                           
                                             </td>
                                         </tr>
                                     </tbody>)}
@@ -156,8 +110,9 @@ const buscar_Usuario = (evento)=>{
                     </Paper>
                   </Grid>     
                 </Grid> 
-            </Container>                     
-        </Fragment>  
-    );
+            </Container>     
+        </>
+    )
 }
-export default Users;
+
+export default AllUsers;

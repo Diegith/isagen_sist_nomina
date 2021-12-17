@@ -1,0 +1,122 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "names": "Miguel",
+      "lastNames": "Gutierrez",
+      "nPhone": 4879,
+      "nIdent": 9784,
+      "email": "mop@gmail.com",
+      "userName": "MiguelGa",
+      "password": 9784,
+      "dateAdmission": "05/01/21",
+      "typeUser": "Usuario Emple",
+      "state": "Inactivo"
+    },
+    {
+      "id": 2,
+      "names": "Martha",
+      "lastNames": "López",
+      "nPhone": 6879,
+      "nIdent": 9786,
+      "email": "gbn@gmail.com",
+      "userName": "MarthaL",
+      "password": 9786,
+      "dateAdmission": "19/12/20",
+      "typeUser": "Usuario Empleado",
+      "state": "Activo"
+    },
+    {
+      "id": 3,
+      "names": "Angela",
+      "lastNames": "Orozco",
+      "nPhone": 1687,
+      "nIdent": 7861,
+      "email": "da6@gmail.com",
+      "userName": "AngelaO",
+      "password": 7861,
+      "dateAdmission": "01/02/20",
+      "typeUser": "Usuario Nomina",
+      "state": "Inactivo"
+    },
+    {
+      "id": 4,
+      "names": "Andres",
+      "lastNames": "Castellanos",
+      "nPhone": 3572,
+      "nIdent": 2753,
+      "email": "rtrg@gmail.com",
+      "userName": "AndresC",
+      "password": 2753,
+      "dateAdmission": "18/03/21",
+      "typeUser": "Administrador",
+      "state": "Activo"
+    }
+  ],
+  "solicitudes": [
+    {
+      "id": 1,
+      "date": "15/11/2021",
+      "typeRequest": "Nómina",
+      "state": "Revisíon"
+    },
+    {
+      "id": 2,
+      "date": "18/10/2021",
+      "typeRequest": "Vacaciones",
+      "state": "Negado"
+    },
+    {
+      "id": 3,
+      "date": "3/09/2021",
+      "typeRequest": "Certificado laboral",
+      "state": "Aprobado"
+    }
+  ],
+  "vacaciones": [
+    {
+      "id": 1,
+      "date": "15/11/2021",
+      "typePermission": "Vacaciones",
+      "state": "Revisíon"
+    },
+    {
+      "id": 2,
+      "date": "18/10/2021",
+      "typePermission": "Vacaciones 1 semana",
+      "state": "Aprobado"
+    },
+    {
+      "id": 3,
+      "date": "3/09/2021",
+      "typePermission": "Viaje 15 días",
+      "state": "Negado"
+    },
+    {
+      "id": 4,
+      "date": "8/10/21",
+      "typePermission": "Fin de año",
+      "state": "Revisión"
+    }
+  ],
+  "permisos": [
+    {
+      "id": 1,
+      "date": "15/11/2021",
+      "typePermission": "Reunión Familiar",
+      "state": "Revisíon"
+    },
+    {
+      "id": 2,
+      "date": "18/10/2021",
+      "typePermission": "Cita medica",
+      "state": "Aprobado"
+    },
+    {
+      "id": 3,
+      "date": "3/09/2021",
+      "typePermission": "Reunión personal",
+      "state": "Negado"
+    }
+  ]
+}

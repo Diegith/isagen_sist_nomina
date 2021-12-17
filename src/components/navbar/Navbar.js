@@ -3,14 +3,16 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
-import Footer from './Footer';
+import Dropdown1 from './Dropdown1';
 
 export default function Navbar() {
     const [click, setClick] = useState(false);
     const [dropdown, setDropdown] = useState(false);
+    const [dropdown1, setDropdown1] = useState(false);
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
+    const closeMobileMenu1 = () => setClick(false);
 
     const onMouseEnter = () => {
         if (window.innerWidth < 960) {
@@ -20,13 +22,28 @@ export default function Navbar() {
         }
       };
     
-    const onMouseLeave = () => {
+      const onMouseLeave = () => {
+        if (window.innerWidth < 960) {
+          setDropdown(false);
+        } else {
+          setDropdown(false);
+        }
+      };
+    
+    const onMouseLeave1 = () => {
       if (window.innerWidth < 960) {
-        setDropdown(false);
+        setDropdown1(false);
       } else {
-        setDropdown(false);
+        setDropdown1(false);
       }
     };
+    const onMouseEnter1 = () => {
+        if (window.innerWidth < 960) {
+          setDropdown1(false);
+        } else {
+          setDropdown1(true);
+        }
+      };
     return (
         <>
         <div className="bg">
@@ -60,11 +77,11 @@ export default function Navbar() {
                         onMouseLeave={onMouseLeave}
                     >
                         <Link 
-                        to='/permisos' 
+                        to='/solicitudes' 
                         className='nav-links' 
                         onClick={closeMobileMenu}
                         >
-                            Procesar <i className='fas fa-caret-down'></i>
+                            Solicitar <i className='fas fa-caret-down'></i>
                         </Link> 
                         {dropdown && <Dropdown />}
                     </li>                    
@@ -83,15 +100,20 @@ export default function Navbar() {
                         onClick={closeMobileMenu}>
                         Reportes
                         </Link> 
-                    </li>
-                    <li className ='nav-item'>
+                    </li><li
+                        className='nav-item'
+                        onMouseEnter={onMouseEnter1}
+                        onMouseLeave={onMouseLeave1}
+                    >
                         <Link 
-                        to='/nomina' 
+                        to='/solicitudes' 
                         className='nav-links' 
-                        onClick={closeMobileMenu}>
-                        Nómina
+                        onClick={closeMobileMenu1}
+                        >
+                            Descargar certificados <i className='fas fa-caret-down'></i>
                         </Link> 
-                    </li>
+                        {dropdown1 && <Dropdown1 />}
+                    </li>                    
                 </ul>                    
                 <Button />
             </nav> 

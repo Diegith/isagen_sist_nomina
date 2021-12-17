@@ -1,47 +1,44 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
+import { getPermisos, deletePermiso } from "../../service/API";
 import { Table } from 'react-bootstrap';
 import '../navbar/Navbar.css';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import { Link } from 'react-router-dom';
 
-export default function Solicitudes()
-{  
-    const solicitudes = [
-        {
-            id: 1,
-            date: "15/11/2021",
-            typeRequest: "Nómina",
-            state: "Revisíon"
-        },
-        {
-            id: 2,
-            date: "18/10/2021",
-            typeRequest: "Vacaciones",
-            state: "Negado"
-        },
-        {
-            id: 3,
-            date: "3/09/2021",
-            typeRequest: "Certificado laboral",
-            state: "Aprobado"
-        }];
-        
-    const [listar_Solicitudes, setListar_Solicitudes] = useState(solicitudes);
-  
-    const buscar_Solicitud = (evento)=>{
-        setListar_Solicitudes(solicitudes.filter(s=> s.typeRequest.toLowerCase().includes(evento.target.value.toLowerCase())))
+const AllPermisos = () => { 
 
-}
+    const [permisos, setPermisos] = useState([]);
 
+    useEffect(() => {
+        getAllPermisos();
+        // eslint-disable-next-line
+    }, [])
+
+    const getAllPermisos = async () => {
+        const res = await getPermisos();
+        console.log(res);
+        setPermisos(res.data);
+    }
+
+    const deletePermisoData = async(id) => {
+        await deletePermiso(id);
+        getAllPermisos();
+    }   
     return (
         <Fragment>
-            <div className='home'>            
+            <div className='home'>
             <Container width="lg" sx={{ mt: 4, mb: 4 }}>            
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                         <div className="col-sm-7 col-md-6 col-lg-6">
-                            <h3><i className="fas fa-receipt"></i> Solicitudes</h3>                            
+                            <h3><i className="fas fa-receipt"></i>    Permisos</h3>                            
+                        </div>
+                        <div className='text-end'>             
+                            <Link to='crear'>
+                                <button className='btn btn-primary'>Nuevo permiso</button>        
+                            </Link>
                         </div>
                     </Paper>
                 </Grid>                  
@@ -68,7 +65,7 @@ export default function Solicitudes()
                                     </select>
                                 </div>
                                 <div className="col-sm-12 col-md-5">
-                                    <input type="text" name="valor" className="form-control" placeholder="Buscar..." onChange={buscar_Solicitud}/>
+                                    <input type="text" name="valor" className="form-control" placeholder="Buscar..."/>
                                 </div>
                                 <div className="col-sm-12 col-md-3 text-start">
                                     <button type="submit" className="btn btn-primary"><i className="fas fa-search"></i> Buscar</button>
@@ -79,15 +76,16 @@ export default function Solicitudes()
                             <div className="col-sm-12 table-responsive">
                                 <Table striped bordered hover variant="dark">
                                     <thead>
-                                        <tr className="text-md-center" >
+                                        <tr className="text-md-center">
                                             <th scope="col">ID</th>
                                             <th scope="col">Fecha</th>
                                             <th scope="col">Tipo de solicitud</th>
                                             <th scope="col">Estado</th>
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     {
-                                    listar_Solicitudes.map(s => <tbody>
+                                    permisos.map(s => <tbody>
                                         <tr className="text-md-center"> 
                                             <td key={s.id}>
                                                 {s.id}                         
@@ -95,11 +93,17 @@ export default function Solicitudes()
                                             <td key={s.date}>
                                                 {s.date}                         
                                             </td>
-                                            <td key={s.typeRequest}>
-                                                {s.typeRequest}                               
+                                            <td key={s.typePermission}>
+                                                {s.typePermission}                               
                                             </td>
                                             <td key={s.state}>
                                                 {s.state}                                                             
+                                            </td>
+                                            <td key="acciones">
+                                                <Link to={`/permisos/editar/${s.id}`}>
+                                                    <button className='btn btn-primary' style={{marginRight: 10}}>Editar</button>
+                                                </Link>                                                
+                                                <button className='btn btn-secondary' onClick={() => deletePermisoData(s.id)}>Eliminar</button>                                                           
                                             </td>
                                         </tr>
                                     </tbody>)}
@@ -114,3 +118,5 @@ export default function Solicitudes()
         </Fragment>  
     );
 }
+
+export default AllPermisos;

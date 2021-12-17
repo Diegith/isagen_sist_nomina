@@ -1,38 +1,30 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
+import { getHolidays, deleteHoliday } from "../../service/API";
 import { Table } from 'react-bootstrap';
 import '../navbar/Navbar.css';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import { Link } from 'react-router-dom';
 
-export default function Vacaciones()
-{  
-    const vacaciones =[
-        {
-            id: 1,
-            date: "15/11/2021",
-            typePermission: "Vacaciones",
-            state: "Revisíon"
-        },
-        {
-            id: 2,
-            date: "18/10/2021",
-            typePermission: "Vacaciones 1 semana",
-            state: "Aprobado"
-        },
-        {
-            id: 3,
-            date: "3/09/2021",
-            typePermission: "Viaje 15 días",
-            state: "Negado"
-        }];
-        
-        const [listar_Vacaciones, setListar_Vacaciones] = useState(vacaciones);
-  
-const buscar_Vacaciones = (evento)=>{
-    setListar_Vacaciones(vacaciones.filter(s=> s.typePermission.toLowerCase().includes(evento.target.value.toLowerCase())))
+const AllHolidays = () => {
 
-}
+    const [holidays, setHolidays] = useState([]);
+
+    useEffect(() => {
+        getAllHolidays();
+    }, [])
+
+    const getAllHolidays = async () => {
+        const res = await getHolidays();
+        console.log(res);
+        setHolidays(res.data);
+    }
+
+    const deleteHolidayData = async(id) => {
+        await deleteHoliday(id);
+        getAllHolidays();
+    }
     return (
         <Fragment>
             <div className='home'>            
@@ -41,6 +33,11 @@ const buscar_Vacaciones = (evento)=>{
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                         <div className="col-sm-7 col-md-6 col-lg-6">
                             <h3><i className="fas fa-receipt"></i>    Vacaciones</h3>                            
+                        </div>
+                        <div className='text-end'>             
+                            <Link to='solicitar'>
+                                <button className='btn btn-primary'>Solicitar vacaciones</button>        
+                            </Link>
                         </div>
                     </Paper>
                 </Grid>                  
@@ -67,7 +64,7 @@ const buscar_Vacaciones = (evento)=>{
                                     </select>
                                 </div>
                                 <div className="col-sm-12 col-md-5">
-                                    <input type="text" name="valor" className="form-control" placeholder="Buscar..." onChange={buscar_Vacaciones}/>
+                                    <input type="text" name="valor" className="form-control" placeholder="Buscar..."/>
                                 </div>
                                 <div className="col-sm-12 col-md-3 text-start">
                                     <button type="submit" className="btn btn-primary"><i className="fas fa-search"></i> Buscar</button>
@@ -83,10 +80,11 @@ const buscar_Vacaciones = (evento)=>{
                                             <th scope="col">Fecha</th>
                                             <th scope="col">Tipo de solicitud</th>
                                             <th scope="col">Estado</th>
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     {
-                                    listar_Vacaciones.map(s => <tbody>
+                                    holidays.map(s => <tbody>
                                         <tr  className="text-md-center"> 
                                             <td key={s.id}>
                                                 {s.id}                         
@@ -99,6 +97,12 @@ const buscar_Vacaciones = (evento)=>{
                                             </td>
                                             <td key={s.state}>
                                                 {s.state}                                                             
+                                            </td>
+                                            <td key="acciones">
+                                                <Link to={`/vacaciones/editar/${s.id}`}>
+                                                    <button className='btn btn-primary' style={{marginRight: 10}}>Editar</button>
+                                                </Link>                                                
+                                                <button className='btn btn-secondary' onClick={() => deleteHolidayData(s.id)}>Eliminar</button>                                                           
                                             </td>
                                         </tr>
                                     </tbody>)}
@@ -113,3 +117,5 @@ const buscar_Vacaciones = (evento)=>{
         </Fragment>  
     );
 }
+
+export default AllHolidays;
